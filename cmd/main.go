@@ -2,11 +2,9 @@ package main
 
 import (
 	"app/config"
-	"app/models"
-	"app/routes"
+	"app/infrastructure/router"
 	"log"
 
-	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
@@ -17,10 +15,7 @@ func main() {
 	}
 
 	config.ConnectDatabase()
-	config.DB.AutoMigrate(&models.User{})
 
-	router := gin.Default()
-	routes.RegisterRoutes(router)
-
-	router.Run(":8080")
+	r := router.NewRouter()
+	r.Run(":8080")
 }
