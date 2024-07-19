@@ -1,8 +1,8 @@
 package router
 
 import (
-	"app/interfaces/api"
 	userRepo "app/repository/user"
+	"app/src/interfaces/api"
 	userUsecase "app/usecase/user"
 
 	"github.com/gin-gonic/gin"

@@ -1,7 +1,7 @@
 package api
 
 import (
-	"app/domain/user"
+	"app/src/domain/user"
 	"net/http"
 	"strconv"
 

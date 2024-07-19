@@ -1,8 +1,8 @@
 package main
 
 import (
-	"app/config"
-	"app/infrastructure/router"
+	"app/src/infrastructure/config"
+	"app/src/interfaces/router"
 	"log"
 
 	"github.com/joho/godotenv"

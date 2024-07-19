@@ -1,8 +1,6 @@
 package user
 
-import (
-	"app/domain/user"
-)
+import "app/src/domain/user"
 
 type userUsecase struct {
 	userRepository user.UserRepository

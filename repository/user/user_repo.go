@@ -1,8 +1,8 @@
 package user
 
 import (
-	"app/config"
-	"app/domain/user"
+	"app/src/domain/user"
+	"app/src/infrastructure/config"
 
 	"gorm.io/gorm"
 )
