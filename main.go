@@ -2,8 +2,8 @@ package main
 
 import (
 	"app/config"
-	"app/handlers"
 	"app/models"
+	"app/routes"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -19,13 +19,8 @@ func main() {
 	config.ConnectDatabase()
 	config.DB.AutoMigrate(&models.User{})
 
-	userHandler := &handlers.UserHandler{DB: config.DB}
-
 	router := gin.Default()
-
-	// Rute contoh
-	router.GET("/users", userHandler.GetUsers)
-	router.POST("/users", userHandler.CreateUser)
+	routes.RegisterRoutes(router)
 
 	router.Run(":8080")
 }
