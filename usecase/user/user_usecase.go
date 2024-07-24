@@ -32,3 +32,7 @@ func (u *userUsecase) UpdateUser(user user.User) (user.User, error) {
 func (u *userUsecase) DeleteUser(id uint) error {
 	return u.userRepository.Delete(id)
 }
+
+func (u *userUsecase) GetUserByEmail(email string) (user.User, error) {
+	return u.userRepository.FindByEmail(email)
+}

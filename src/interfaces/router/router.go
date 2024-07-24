@@ -1,6 +1,7 @@
 package router
 
 import (
+	"app/middlewares"
 	userRepo "app/repository/user"
 	"app/src/interfaces/api"
 	userUsecase "app/usecase/user"
@@ -14,14 +15,22 @@ func NewRouter() *gin.Engine {
 	userRepository := userRepo.NewUserRepository()
 	userService := userUsecase.NewUserUsecase(userRepository)
 	userHandler := api.NewUserHandler(userService)
+	authHandler := api.NewAuthHandler(userService)
 
 	v1 := r.Group("/api/v1")
 	{
-		v1.GET("/users", userHandler.GetUsers)
-		v1.POST("/users", userHandler.CreateUser)
-		v1.GET("/users/:id", userHandler.GetUser)
-		v1.PUT("/users/:id", userHandler.UpdateUser)
-		v1.DELETE("/users/:id", userHandler.DeleteUser)
+		v1.POST("/register", authHandler.Register)
+		v1.POST("/login", authHandler.Login)
+
+		userRoutes := v1.Group("/users")
+		userRoutes.Use(middlewares.JWTAuthMiddleware())
+		{
+			userRoutes.GET("/", userHandler.GetUsers)
+			userRoutes.POST("/", userHandler.CreateUser)
+			userRoutes.GET("/:id", userHandler.GetUser)
+			userRoutes.PUT("/:id", userHandler.UpdateUser)
+			userRoutes.DELETE("/:id", userHandler.DeleteUser)
+		}
 	}
 
 	return r

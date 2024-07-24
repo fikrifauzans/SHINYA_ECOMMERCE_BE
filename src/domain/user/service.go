@@ -6,4 +6,5 @@ type UserService interface {
 	CreateUser(user User) (User, error)
 	UpdateUser(user User) (User, error)
 	DeleteUser(id uint) error
+	GetUserByEmail(email string) (User, error)
 }

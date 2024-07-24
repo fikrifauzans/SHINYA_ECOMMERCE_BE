@@ -53,3 +53,11 @@ func (r *userRepository) Delete(id uint) error {
 	}
 	return nil
 }
+
+func (r *userRepository) FindByEmail(email string) (user.User, error) {
+	var user user.User
+	if err := r.db.Where("email = ?", email).First(&user).Error; err != nil {
+		return user, err
+	}
+	return user, nil
+}

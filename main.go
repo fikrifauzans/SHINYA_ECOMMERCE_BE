@@ -15,7 +15,7 @@ func main() {
 	}
 
 	config.ConnectDatabase()
-
+	// db.Migrate()
 	r := router.NewRouter()
 	r.Run(":8080")
 }
