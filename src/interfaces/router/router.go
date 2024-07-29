@@ -2,7 +2,7 @@ package router
 
 import (
 	"app/middlewares"
-	userRepo "app/repository/user"
+	userRepo "app/src/infrastructure/persistence"
 	"app/src/interfaces/api"
 	userUsecase "app/usecase/user"
 
