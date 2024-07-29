@@ -1,10 +1,9 @@
 package router
 
 import (
-	"app/middlewares"
-	userRepo "app/src/infrastructure/persistence"
+	usecase "app/src/application/usecase"
+	repository "app/src/infrastructure/persistence"
 	"app/src/interfaces/api"
-	userUsecase "app/usecase/user"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,25 +11,21 @@ import (
 func NewRouter() *gin.Engine {
 	r := gin.Default()
 
-	userRepository := userRepo.NewUserRepository()
-	userService := userUsecase.NewUserUsecase(userRepository)
+	userRepository := repository.NewUserRepository()
+	userService := usecase.NewUserUsecase(userRepository)
+
+	productRepository := repository.NewProductRepository()
+	productService := usecase.NewProductUsecase(productRepository)
+
 	userHandler := api.NewUserHandler(userService)
 	authHandler := api.NewAuthHandler(userService)
+	productHandler := api.NewProductHandler(productService)
 
 	v1 := r.Group("/api/v1")
 	{
-		v1.POST("/register", authHandler.Register)
-		v1.POST("/login", authHandler.Login)
-
-		userRoutes := v1.Group("/users")
-		userRoutes.Use(middlewares.JWTAuthMiddleware())
-		{
-			userRoutes.GET("/", userHandler.GetUsers)
-			userRoutes.POST("/", userHandler.CreateUser)
-			userRoutes.GET("/:id", userHandler.GetUser)
-			userRoutes.PUT("/:id", userHandler.UpdateUser)
-			userRoutes.DELETE("/:id", userHandler.DeleteUser)
-		}
+		AuthRoutes(v1, authHandler)
+		UserRoutes(v1, userHandler)
+		ProductRoutes(v1, productHandler)
 	}
 
 	return r

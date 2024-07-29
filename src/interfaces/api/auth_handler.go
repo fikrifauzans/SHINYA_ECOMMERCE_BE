@@ -1,7 +1,7 @@
 package api
 
 import (
-	"app/middlewares"
+	"app/src/application/middlewares"
 	"app/src/domain/user"
 	"net/http"
 
